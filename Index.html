@@ -1,0 +1,240 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <title>Catálogo de Jogos • Roda de Vôlei</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="style.css">
+
+  <style>
+    * {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: Arial, Helvetica, sans-serif;
+}
+
+body {
+  background: #0a0a0a;
+  color: #fff;
+}
+
+/* Header */
+header {
+  text-align: center;
+  padding: 30px 20px;
+  background: linear-gradient(135deg, #ffd700, #0077ff);
+  color: #000;
+}
+
+/* Catálogo */
+.catalogo-wrapper {
+  display: flex;
+  overflow-x: auto;
+  scroll-snap-type: x mandatory;
+  scroll-behavior: smooth;
+  gap: 20px;
+  padding: 40px 20px;
+}
+
+.catalogo-wrapper::-webkit-scrollbar {
+  display: none;
+}
+
+.jogo {
+  scroll-snap-align: center;
+  min-width: 260px;
+  background: #111;
+  border-radius: 16px;
+  padding: 20px;
+  opacity: 0;
+  transform: translateY(20px);
+  transition: 0.6s;
+}
+
+.jogo.visivel {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.jogo h2 {
+  color: #ffd700;
+  margin-bottom: 10px;
+}
+
+.jogo a {
+  display: inline-block;
+  margin-top: 15px;
+  padding: 10px 18px;
+  background: #0077ff;
+  color: #fff;
+  border-radius: 20px;
+  text-decoration: none;
+  transition: transform 0.2s, box-shadow 0.2s;
+}
+
+.jogo a:active {
+  transform: scale(0.95);
+}
+
+/* Indicadores */
+.indicadores {
+  display: flex;
+  justify-content: center;
+  gap: 8px;
+}
+
+.indicadores span {
+  width: 8px;
+  height: 8px;
+  background: rgba(255,215,0,0.4);
+  border-radius: 50%;
+  transition: 0.3s;
+}
+
+.indicadores span.ativo {
+  background: #ffd700;
+  transform: scale(1.4);
+}
+
+/* Seção final */
+.final {
+  display: flex;
+  gap: 30px;
+  padding: 40px 20px;
+  justify-content: center;
+}
+
+.bloco {
+  text-align: center;
+}
+
+.bloco img {
+  width: 120px;
+  margin-bottom: 15px;
+}
+
+.bloco a {
+  display: inline-block;
+  padding: 10px 20px;
+  background: #ffd700;
+  color: #000;
+  border-radius: 20px;
+  text-decoration: none;
+}
+  </style>
+</head>
+
+<body>
+
+<header>
+  <h1>Catálogo de Jogos</h1>
+  <p>Roda de Vôlei • Marlene Leite da Silva</p>
+</header>
+
+<section class="catalogo-wrapper" id="catalogo">
+
+  <div class="jogo">
+    <h2>Vôlei Livre</h2>
+    <p>Jogo aberto, sem regras fixas.</p>
+    <a href="#" target="_blank">Acessar jogo</a>
+  </div>
+
+  <div class="jogo">
+    <h2>3x3 Rápido</h2>
+    <p>Partidas curtas e dinâmicas.</p>
+    <a href="#" target="_blank">Acessar jogo</a>
+  </div>
+
+  <div class="jogo">
+    <h2>Desafio de Saque</h2>
+    <p>Precisão e controle.</p>
+    <a href="#" target="_blank">Acessar jogo</a>
+  </div>
+
+</section>
+
+<div class="indicadores" id="indicadores"></div>
+
+<section class="final">
+  <div class="bloco">
+    <img src="" alt="Roda de Vôlei">
+    <a href="https://www.instagram.com/roda_de_volei.mls/" target="_blank">Instagram</a>
+  </div>
+
+  <div class="bloco">
+    <img src="" alt="Comunidade">
+    <a href="https://ig.me/j/AbbXwMAe_LT4l68f/" target="_blank">Comunidade</a>
+  </div>
+</section>
+
+<script src="script.js">
+  const catalogo = document.getElementById("catalogo");
+const jogos = document.querySelectorAll(".jogo");
+const indicadores = document.getElementById("indicadores");
+
+let indexAtual = 0;
+let autoScroll;
+
+/* Indicadores */
+jogos.forEach((_, i) => {
+  const dot = document.createElement("span");
+  if (i === 0) dot.classList.add("ativo");
+  indicadores.appendChild(dot);
+});
+
+const dots = indicadores.querySelectorAll("span");
+
+/* Atualiza indicador */
+function atualizarIndicador() {
+  const index = Math.round(catalogo.scrollLeft / catalogo.clientWidth);
+  dots.forEach(dot => dot.classList.remove("ativo"));
+  dots[index]?.classList.add("ativo");
+}
+
+catalogo.addEventListener("scroll", atualizarIndicador);
+
+/* Auto scroll inteligente */
+function iniciarAutoScroll() {
+  autoScroll = setInterval(() => {
+    indexAtual = (indexAtual + 1) % jogos.length;
+    catalogo.scrollTo({
+      left: catalogo.clientWidth * indexAtual,
+      behavior: "smooth"
+    });
+  }, 4000);
+}
+
+function pararAutoScroll() {
+  clearInterval(autoScroll);
+}
+
+catalogo.addEventListener("touchstart", pararAutoScroll);
+catalogo.addEventListener("mouseenter", pararAutoScroll);
+catalogo.addEventListener("mouseleave", iniciarAutoScroll);
+
+iniciarAutoScroll();
+
+/* Animação de entrada */
+const observer = new IntersectionObserver(entries => {
+  entries.forEach(entry => {
+    if (entry.isIntersecting) {
+      entry.target.classList.add("visivel");
+    }
+  });
+}, { threshold: 0.4 });
+
+jogos.forEach(jogo => observer.observe(jogo));
+
+/* Modo apresentação (tecla P) */
+let apresentacao = false;
+
+document.addEventListener("keydown", e => {
+  if (e.key.toLowerCase() === "p") {
+    apresentacao = !apresentacao;
+    apresentacao ? iniciarAutoScroll() : pararAutoScroll();
+  }
+});
+</script>
+</body>
+      </html>
