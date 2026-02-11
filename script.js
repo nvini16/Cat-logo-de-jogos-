@@ -87,19 +87,5 @@ iniciarAutoScroll();
 
 
 function enviarFeedback() {
-  const texto = document.getElementById("mensagem").value;
-
-  if (!texto.trim()) {
-    alert("Escreva algo antes de enviar.");
-    return;
-  }
-
-  const mensagemFormatada = encodeURIComponent(
-    "Feedback - Roda de Vôlei:\n\n" + texto
-  );
-
-  window.location.href = 
-"mailto:seuemail@email.com?subject=Feedback Catalogo&body=" + mensagemFormatada;
-    "_blank"
-  );
+  window.open("https://docs.google.com/forms/d/e/1FAIpQLSe23cmjsXHp4zesaf-nYCPoZH6nnlsKnmjkYD-POwR1IuKBlw/viewform", "_blank");
 }
