@@ -98,8 +98,8 @@ function enviarFeedback() {
     "Feedback - Roda de Vôlei:\n\n" + texto
   );
 
-  window.open(
-    "https://ig.me/m/roda_de_volei.mls?text=" + mensagemFormatada,
+  window.location.href = 
+"mailto:seuemail@email.com?subject=Feedback Catalogo&body=" + mensagemFormatada;
     "_blank"
   );
 }
