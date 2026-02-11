@@ -89,3 +89,18 @@ iniciarAutoScroll();
 function enviarFeedback() {
   window.open("https://docs.google.com/forms/d/e/1FAIpQLSe23cmjsXHp4zesaf-nYCPoZH6nnlsKnmjkYD-POwR1IuKBlw/viewform", "_blank");
 }
+
+const music = document.getElementById("bgMusic");
+const btn = document.getElementById("toggleMusic");
+
+music.volume = 0.3; // 30%
+
+btn.addEventListener("click", () => {
+  if (music.paused) {
+    music.play();
+    btn.textContent = "Pausar";
+  } else {
+    music.pause();
+    btn.textContent = "Música";
+  }
+});
