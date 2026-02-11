@@ -84,3 +84,22 @@ document.addEventListener("keydown", e => {
 
 /* ===== Inicialização ===== */
 iniciarAutoScroll();
+
+
+function enviarFeedback() {
+  const texto = document.getElementById("mensagem").value;
+
+  if (!texto.trim()) {
+    alert("Escreva algo antes de enviar.");
+    return;
+  }
+
+  const mensagemFormatada = encodeURIComponent(
+    "Feedback - Roda de Vôlei:\n\n" + texto
+  );
+
+  window.open(
+    "https://ig.me/m/roda_de_volei.mls?text=" + mensagemFormatada,
+    "_blank"
+  );
+}
