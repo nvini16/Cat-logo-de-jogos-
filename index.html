@@ -123,6 +123,60 @@ header {
   border-radius: 20px;
   text-decoration: none;
 }
+
+    /* ===== Feedback ===== */
+.feedback {
+  padding: 60px 20px;
+  display: flex;
+  justify-content: center;
+}
+
+.feedback-box {
+  background: linear-gradient(135deg, #111, #1a1a1a);
+  border: 2px solid #ffd700;
+  border-radius: 20px;
+  padding: 40px 30px;
+  text-align: center;
+  max-width: 500px;
+  width: 100%;
+  box-shadow: 0 0 25px rgba(255, 215, 0, 0.15);
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.feedback-box:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 0 35px rgba(0, 119, 255, 0.25);
+}
+
+.feedback-box h2 {
+  color: #ffd700;
+  margin-bottom: 15px;
+}
+
+.feedback-box p {
+  color: #ccc;
+  margin-bottom: 25px;
+  font-size: 0.95rem;
+}
+
+.btn-feedback {
+  background: linear-gradient(135deg, #ffd700, #0077ff);
+  border: none;
+  padding: 12px 28px;
+  border-radius: 30px;
+  font-weight: bold;
+  cursor: pointer;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.btn-feedback:hover {
+  transform: scale(1.05);
+  box-shadow: 0 5px 20px rgba(0, 119, 255, 0.4);
+}
+
+.btn-feedback:active {
+  transform: scale(0.95);
+}
   </style>
 </head>
 
@@ -170,9 +224,13 @@ header {
 </section>
 
   <section class="feedback">
-  <h2>Feedback</h2>
-  <p>Relate um problema ou sugira melhorias no catálogo.</p>
-  <button onclick="enviarFeedback()">Enviar feedback</button>
+  <div class="feedback-box">
+    <h2>Feedback</h2>
+    <p>Encontrou um erro ou tem uma ideia para melhorar o catálogo?</p>
+    <button class="btn-feedback" onclick="enviarFeedback()">
+      Enviar sugestão
+    </button>
+  </div>
   </section>
 <script src="script.js"></script>
 </body>
